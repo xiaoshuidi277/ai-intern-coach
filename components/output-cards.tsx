@@ -64,10 +64,12 @@
  }
  
  function MiniCard({
+   id,
    title,
    color,
    items,
  }: {
+   id?: string;
    title: string;
    color: "blue" | "green" | "amber";
    items: string[];
@@ -79,7 +81,7 @@
    };
  
    return (
-     <div className={`bg-white border border-slate-200 rounded-lg p-6 border-l-[3px] ${borders[color]}`}>
+     <div id={id} className={`bg-white border border-slate-200 rounded-lg p-6 border-l-[3px] ${borders[color]}`}>
        <h3 className="text-sm font-semibold text-slate-700 mb-2">{title}</h3>
        {items.length > 0 ? (
          <ul className="space-y-1">
