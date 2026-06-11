@@ -6,14 +6,15 @@ const DATA_FILE = path.join(process.cwd(), "data", "app-data.json");
 const APP_VERSION = 1;
 
 // Vercel KV 可用时才加载
-let kvModule: typeof import("@vercel/kv") | null = null;
-async function getKV() {
-  if (kvModule) return kvModule;
-  try {
-    kvModule = await import("@vercel/kv");
-    return kvModule;
-  } catch { return null; }
-}
+ let kvInstance: import("@vercel/kv").VercelKV | null = null;
+ async function getKV(): Promise<import("@vercel/kv").VercelKV | null> {
+   if (kvInstance) return kvInstance;
+   try {
+     const { kv } = await import("@vercel/kv");
+     kvInstance = kv;
+     return kvInstance;
+   } catch { return null; }
+ }
 
 export function getDefaultData(): AppData {
   return { projects: [], tasks: [], entries: [], unresolvedBlockers: [], reports: [], version: APP_VERSION };
